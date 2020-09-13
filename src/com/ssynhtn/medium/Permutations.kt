@@ -27,32 +27,32 @@ class Permutations {
         }
 
         swapPermute2(nums, size - 1, collect)
-        val index = nums.size - size
-        var j = nums.size - 1;
-        var i = index + 2
+        val index = size - 1
+        var j = 0;
+        var i = index - 2
 
-        while (j > index) {
-            if (j > index) {
+        while (j < index) {
+            if (j < index) {
                 val temp = nums[index]
                 nums[index] = nums[j]
                 nums[j] = temp
                 swapPermute2(nums, size - 1, collect)
-                j -= 2;
+                j += 2;
             }
 
-            if (i < nums.size) {
+            if (i >= 0) {
                 val temp = nums[i]
                 nums[i] = nums[index]
                 nums[index] = temp
                 swapPermute2(nums, size - 1, collect)
-                i += 2;
+                i -= 2;
             }
 
 
         }
 
-        if (size % 2 == 0) {
-            reverse(nums, index + 1, nums.size - 1)
+        if (j == size) {
+            reverse(nums, 0, index - 1)
         }
 
 
