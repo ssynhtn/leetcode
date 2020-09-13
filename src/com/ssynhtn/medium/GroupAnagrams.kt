@@ -4,11 +4,18 @@ class GroupAnagrams {
     fun groupAnagrams(strs: Array<String>): List<List<String>> {
 
         val map: MutableMap<String, MutableList<String>> = mutableMapOf()
+        val data = CharArray(26)
 
         for (i in 0 until strs.size) {
-            val chs = strs[i].toCharArray()
-            chs.sort()
-            val key = String(chs)
+            for (j in 0 until data.size) {
+                data[j] = 0.toChar()
+            }
+
+            for (ch in strs[i]) {
+                data[ch - 'a']++
+            }
+
+            val key = String(data)
 
             if (map.containsKey(key)) {
                 map[key]!!.add(strs[i])
