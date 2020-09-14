@@ -7,16 +7,21 @@ class GetPermutation {
             chs[i - 1] = '0'.plus(i)
         }
         var index = k - 1
-        val facts = IntArray(n - 1)
+        val facts = mutableListOf<Int>()
+
         var f = 1
         for (i in 1 .. n-1) {
             f = f * i
-            facts[n - i - 1] = f
+            if (f <= index) {
+                facts.add(f)
+            }
+//            facts[n - i - 1] = f
         }
 
-        for (i in 0 until n - 1) {
-            val multiple = index / facts[i]
-            index = index % facts[i]
+        // i == n-2, [0]
+        for (i in n-1-facts.size until n - 1) {
+            val multiple = index / facts[n-2-i]
+            index = index % facts[n-2-i]
 
             shiftRight(chs, i, multiple)
 
