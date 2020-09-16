@@ -1,7 +1,5 @@
 package com.ssynhtn.easy
 
-import kotlin.math.sqrt
-
 class Sqrt {
     fun mySqrt(x: Int): Int {
         var x1 = x
