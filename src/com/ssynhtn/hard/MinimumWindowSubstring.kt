@@ -45,7 +45,7 @@ class MinimumWindowSubstring {
                     if (!chars.containsKey(chLeft)) {
                         continue
                     }
-                    
+
                     charCounts[chLeft] = charCounts[chLeft]!! - 1
                     if (charCounts[chLeft] == chars[chLeft]!! - 1) {
                         sufficientChars--
