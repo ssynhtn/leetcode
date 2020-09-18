@@ -14,7 +14,7 @@ class FourDivisors {
      * if num has 4 divisors, return sum, else return 0
      */
     fun divisorSum(n: Int): Int {
-        for (i in 2 until Math.sqrt(n.toDouble()).toInt()) {
+        for (i in 2 .. Math.sqrt(n.toDouble()).toInt()) {
             if (n % i == 0) {
                 if (i * i * i == n) {
                     return 1 + i + i * i + n
