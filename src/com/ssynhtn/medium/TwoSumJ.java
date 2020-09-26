@@ -13,8 +13,8 @@ public class TwoSumJ {
 
             int index = Arrays.binarySearch(copy, i + 1, copy.length, b);
             if (index >= 0) {
-                var aIndex = -1;
-                var bIndex = -1;
+                int aIndex = -1;
+                int bIndex = -1;
 
                 for (int j = 0; j < nums.length; j++) {
                     if (aIndex == -1 && nums[j] == a) {

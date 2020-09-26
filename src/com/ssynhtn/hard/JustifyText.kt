@@ -2,7 +2,6 @@ package com.ssynhtn.hard
 
 import java.lang.IllegalArgumentException
 import java.lang.StringBuilder
-import kotlin.math.max
 
 class JustifyText {
     fun fullJustify(words: Array<String>, maxWidth: Int): List<String> {
@@ -10,7 +9,7 @@ class JustifyText {
         val row = mutableListOf<String>()
         var usedWidth = 0
         var index = 0
-        val sb = StringBuilder()
+        var sb = StringBuilder()
         while (index < words.size) {
             // usedWidth = 0, row empty, sb empty
             if (words[index].length > maxWidth) {
@@ -63,6 +62,7 @@ class JustifyText {
             usedWidth = 0
             row.clear()
             sb.clear()
+//            sb = StringBuilder();
         }
 
         return result
