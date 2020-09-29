@@ -1,5 +1,7 @@
 package com.ssynhtn.medium;
 
+import com.ssynhtn.common.TreeNode;
+
 public class ValidBST {
     public boolean isValidBST(TreeNode root) {
         return isValid(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
@@ -32,15 +34,3 @@ public class ValidBST {
     }
 }
 
-class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-    TreeNode() {}
-    TreeNode(int val) { this.val = val; }
-    TreeNode(int val, TreeNode left, TreeNode right) {
-        this.val = val;
-        this.left = left;
-        this.right = right;
-    }
-}
