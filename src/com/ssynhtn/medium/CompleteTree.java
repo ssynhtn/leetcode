@@ -1,23 +1,13 @@
 package com.ssynhtn.medium;
 
 
+import com.ssynhtn.common.TreeNode;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class CompleteTree {
 
-    static class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-        TreeNode() {}
-        TreeNode(int val) { this.val = val; }
-        TreeNode(int val, TreeNode left, TreeNode right) {
-            this.val = val;
-            this.left = left;
-            this.right = right;
-        }
-    }
 
     public boolean isCompleteTree(TreeNode root) {
         if (root == null) return true;
