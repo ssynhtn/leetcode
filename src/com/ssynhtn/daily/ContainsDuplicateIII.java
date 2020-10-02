@@ -1,7 +1,5 @@
 package com.ssynhtn.daily;
 
-import com.sun.javafx.embed.HostDragStartListener;
-import org.omg.PortableInterceptor.HOLDING;
 
 import java.util.*;
 
