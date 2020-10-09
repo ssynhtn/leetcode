@@ -1,32 +1,14 @@
 package com.ssynhtn.daily;
 
-import com.sun.javafx.embed.HostDragStartListener;
-import org.omg.PortableInterceptor.HOLDING;
+import com.ssynhtn.medium.NumMatrix;
+import org.omg.CORBA.BAD_INV_ORDER;
 
 import java.util.*;
 
 public class ContainsDuplicateIII {
-    static class Holder implements Comparable<Holder> {
-        int num;
-        long minDiff;
 
-        public Holder(int num) {
-            this.num = num;
-        }
-
-        @Override
-        public int compareTo(Holder o) {
-            if (this == o) return 0;
-            int diff = this.num - o.num;
-            int absDiff = this.num >= o.num ? diff : -diff;
-            if (absDiff >= 0) {
-                this.minDiff = Math.min(minDiff, absDiff);
-                o.minDiff = Math.min(o.minDiff, absDiff);
-            }
-            return diff;
-        }
-    }
-
+    long minDiff = Long.MAX_VALUE;
+    boolean isRemoving;
     public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
         if (nums.length <= 1) return false;
         if (k == 0) return false;
@@ -35,43 +17,51 @@ public class ContainsDuplicateIII {
             k = nums.length - 1;
         }
 
-        // tree set of holder, n -> holder
-        ArrayDeque<Holder> holders = new ArrayDeque<>();
-        Set<Holder> binaryTree = new TreeSet<>();
+        Set<Integer> binaryTree = new TreeSet<>(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                if (o1 == o2) return 0;
+                if (!isRemoving) {
+                    minDiff = Math.min(minDiff, Math.abs(o1.longValue() - o2.longValue()));
+//                    System.out.println("minDiff -> " + minDiff + ", isRemoving " + isRemoving + ", o1" + System.identityHashCode(o1) + ", o2" + System.identityHashCode(o2));
+                }
+                return o1.compareTo(o2);
+            }
+        });
 
         int i;
         for (i = 0; i <= k; i++) {
-            Holder holder = new Holder(nums[i]);
-            holders.addLast(holder);
-            holder.minDiff = Long.MAX_VALUE;
-
-            binaryTree.add(holder);
-            if (holder.minDiff <= t) {
-//                System.out.println("add at " + i + " of " + holder.num + " leads to diff " + holder.minDiff);
+            if (!binaryTree.add(nums[i])) {
+                return true;
+            }
+            if (minDiff <= t) {
+//                System.out.println("after " + i + "th element " + nums[i] + ", reached mindiff " + minDiff + ", isRemoving " + isRemoving);
                 return true;
             }
         }
 
+        int j = 0;
         while (i < nums.length) {
-            Holder last = holders.removeFirst();
-            binaryTree.remove(last);
+            isRemoving = true;
+            binaryTree.remove(nums[j]);
+            isRemoving = false;
 
-            Holder holder = new Holder(nums[i]);
-            holders.addLast(holder);
-            holder.minDiff = Long.MAX_VALUE;
-
-            binaryTree.add(holder);
-            if (holder.minDiff <= t) {
-//                System.out.println("add at " + i + " of " + holder.num + " leads to diff " + holder.minDiff);
+            if (!binaryTree.add(nums[i])) {
+                return true;
+            }
+            if (minDiff <= t) {
+//                System.out.println("after " + i + "th elem " + nums[i] + ", reached mindiff " +minDiff);
                 return true;
             }
             i++;
+            j++;
         }
 
         return false;
     }
 
+
     public static void main(String[] args) {
-        System.out.println(new ContainsDuplicateIII().containsNearbyAlmostDuplicate(new int[]{1, 2, 3, 1}, 3, 0));
+        System.out.println(new ContainsDuplicateIII().containsNearbyAlmostDuplicate(new int[]{1, 5, 9, 1, 5, 9}, 2, 3));
     }
 }

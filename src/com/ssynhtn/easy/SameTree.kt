@@ -1,5 +1,7 @@
 package com.ssynhtn.easy
 
+import com.ssynhtn.common.TreeNode
+
 class SameTree {
     fun isSameTree(p: TreeNode?, q: TreeNode?): Boolean {
         if (p == null) {
@@ -14,7 +16,3 @@ class SameTree {
     }
 }
 
-class TreeNode(var `val`: Int) {
-    var left: TreeNode? = null
-    var right: TreeNode? = null
-}
