@@ -1,5 +1,7 @@
 package com.ssynhtn.medium
 
+import com.ssynhtn.common.ListNode
+
 class RotateList {
     fun rotateRight(head: ListNode?, k: Int): ListNode? {
         if (head == null) return null
@@ -37,7 +39,4 @@ class RotateList {
 
         return result
     }
-}
-class ListNode(var `val`: Int) {
-    var next: ListNode? = null
 }

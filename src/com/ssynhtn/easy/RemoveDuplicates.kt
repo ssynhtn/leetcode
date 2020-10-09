@@ -1,5 +1,7 @@
 package com.ssynhtn.easy
 
+import com.ssynhtn.common.ListNode
+
 class RemoveDuplicates {
 //    fun deleteDuplicates(head: ListNode?): ListNode? {
 //        if (head == null) return null
@@ -79,17 +81,6 @@ fun generateNode(intArray: IntArray): ListNode? {
     return head
 }
 
-class ListNode(var `val`: Int) {
-    var next: ListNode? = null
-
-    override fun toString(): String {
-        if (next == null) {
-            return `val`.toString()
-        } else {
-            return `val`.toString() + "->" + next.toString()
-        }
-    }
-}
 
 fun main() {
     println(RemoveDuplicates().deleteDuplicates(generateNode(intArrayOf(1,1,1, 2, 3))))
