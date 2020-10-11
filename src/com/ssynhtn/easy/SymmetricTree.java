@@ -7,7 +7,6 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 
 public class SymmetricTree {
-
     public boolean isSymmetric(TreeNode root) {
         if (root == null) return true;
         return isSymmetric(root.left, root.right);
