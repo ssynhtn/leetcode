@@ -20,7 +20,7 @@ public class IntervalIntersection {
             } else {
                 int[] joint = new int[2];
                 joint[0] = Math.max(x[0], y[0]);
-                joint[1] = Math.max(x[1], y[1]);
+                joint[1] = Math.min(x[1], y[1]);
                 res.add(joint);
 
                 if (x[1] > y[1]) {
