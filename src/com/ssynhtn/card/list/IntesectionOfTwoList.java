@@ -7,6 +7,46 @@ import java.util.Set;
 
 public class IntesectionOfTwoList {
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if (headA == null || headB == null) return null;
+        ListNode tailA = headA;
+        int lenA = 1;
+        while (tailA.next != null) {
+            tailA = tailA.next;
+            lenA++;
+        }
+
+        ListNode tailB = headB;
+        int lenB = 1;
+        while (tailB.next != null) {
+            tailB = tailB.next;
+            lenB++;
+        }
+
+        if (tailA != tailB) {
+            return null;
+        }
+
+        tailA = headA;
+        tailB = headB;
+        while (lenA > lenB) {
+            tailA = tailA.next;
+            lenA--;
+        }
+        while (lenB > lenA) {
+            tailB = tailB.next;
+            lenB--;
+        }
+
+        while (tailA != tailB) {
+            tailA = tailA.next;
+            tailB = tailB.next;
+        }
+
+
+        return tailA;
+    }
+
+    public ListNode getIntersectionNodeHashSet(ListNode headA, ListNode headB) {
         Set<ListNode> aNodes = new HashSet<>();
         Set<ListNode> bNodes = new HashSet<>();
 
