@@ -54,7 +54,7 @@ public class CutTrees {
         Queue<int[]> q = new ArrayDeque<>();
 
         q.add(new int[]{x, y});
-        visited[x][y] = true;
+//        visited[x][y] = true;
         int levels = 0;
         while (!q.isEmpty()) {
             int size = q.size();
@@ -63,7 +63,11 @@ public class CutTrees {
                 if (pos[0] == x2 && pos[1] == y2) {
                     return levels;
                 }
-//                visited[pos[0]][pos[1]] = true;
+
+                if (visited[pos[0]][pos[1]]) {
+                    continue;
+                }
+                visited[pos[0]][pos[1]] = true;
 
                 int i = pos[0];
                 int j = pos[1];
@@ -71,7 +75,7 @@ public class CutTrees {
                     if (I >= 0 && I < n) {
                         if (forest.get(I).get(j) != 0) {
                             if (!visited[I][j]) {
-                                visited[I][j] = true;
+//                                visited[I][j] = true;
 //                                System.out.println("adding new neigh " + I + ", " + j);
                                 q.add(new int[]{I, j});
                             }
@@ -83,7 +87,7 @@ public class CutTrees {
                     if (J >= 0 && J < m) {
                         if (forest.get(i).get(J) != 0) {
                             if (!visited[i][J]) {
-                                visited[i][J] = true;
+//                                visited[i][J] = true;
 //                                System.out.println("adding new neigh " + i + ", " + J);
                                 q.add(new int[]{i, J});
                             }
