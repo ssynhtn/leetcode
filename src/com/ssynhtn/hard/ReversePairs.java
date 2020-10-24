@@ -122,11 +122,6 @@ public class ReversePairs {
             k++;
             i++;
         }
-        while (j <= right) {
-            nums[k] = nums[j];
-            k++;
-            j++;
-        }
 
         return count;
     }
