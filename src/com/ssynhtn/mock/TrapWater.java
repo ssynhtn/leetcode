@@ -1,6 +1,5 @@
 package com.ssynhtn.mock;
 
-import oracle.jvm.hotspot.jfr.GlobalTraceBuffer;
 
 import java.util.Arrays;
 

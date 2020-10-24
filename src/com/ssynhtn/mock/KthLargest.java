@@ -1,9 +1,6 @@
 package com.ssynhtn.mock;
 
-import com.sun.tools.internal.xjc.reader.dtd.TDTDReader;
 
-import java.sql.SQLSyntaxErrorException;
-import java.util.Comparator;
 import java.util.TreeSet;
 
 public class KthLargest {
