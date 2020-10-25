@@ -1,7 +1,6 @@
 package com.ssynhtn.card.tree;
 
 import com.ssynhtn.common.TreeNode;
-import org.omg.PortableInterceptor.INACTIVE;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -29,7 +28,7 @@ public class PreOrderTraversal {
         return res;
     }
     public List<Integer> preorderTraversal(TreeNode root) {
-        List<Integer> res = new ArrayList();
+        List<Integer> res = new ArrayList<>();
         if (root == null) return res;
 
         ArrayDeque<TreeNode> q = new ArrayDeque<>();
@@ -47,5 +46,23 @@ public class PreOrderTraversal {
         }
 
         return res;
+    }
+
+    public List<Integer> preorderTraversalRec(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        if (root == null) return res;
+
+        preOrder(root, res);
+
+        return res;
+
+    }
+
+    private void preOrder(TreeNode node, List<Integer> res) {
+        if (node != null) {
+            res.add(node.val);
+            preOrder(node.left, res);
+            preOrder(node.right, res);
+        }
     }
 }
