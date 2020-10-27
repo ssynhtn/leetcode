@@ -30,4 +30,15 @@ public class ListNode {
         }
         return head;
     }
+
+    public static ListNode makeList(Integer ... data) {
+        if (data == null || data.length == 0) return null;
+        ListNode head = new ListNode(data[0]);
+        ListNode node = head;
+        for (int i = 1; i < data.length; i++) {
+            node.next = new ListNode(data[i]);
+            node = node.next;
+        }
+        return head;
+    }
 }
