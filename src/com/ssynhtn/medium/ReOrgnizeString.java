@@ -44,6 +44,11 @@ public class ReOrgnizeString {
                 return o2.count - o1.count;
             }
         });
+        int j = 0;
+        while (j < 26 && charCounts[j].count > 0) {
+            j++;
+        }
+        j--;
 
         StringBuilder sb = new StringBuilder();
         while (charCounts[0].count > 0) {
@@ -56,16 +61,11 @@ public class ReOrgnizeString {
             } else {
                 sb.append(charCounts[0].ch);
                 charCounts[0].count--;
-                if (charCounts[1].count > 0) {
-                    sb.append(charCounts[1].ch);
-                    charCounts[1].count--;
-
-                    for (int i = 1; i + 1 < 26; i++) {
-                        if (charCounts[i].count < charCounts[i+1].count) {
-                            CharCount temp = charCounts[i];
-                            charCounts[i] = charCounts[i+1];
-                            charCounts[i+1] = temp;
-                        }
+                if (j > 0) {
+                    sb.append(charCounts[j].ch);
+                    charCounts[j].count--;
+                    if (charCounts[j].count == 0) {
+                        j--;
                     }
                 }
             }
@@ -75,7 +75,7 @@ public class ReOrgnizeString {
     }
 
     public static void main(String[] args) {
-        System.out.println(new ReOrgnizeString().reorganizeString("aaab"));
+        System.out.println(new ReOrgnizeString().reorganizeString("aab"));
     }
 
 }
