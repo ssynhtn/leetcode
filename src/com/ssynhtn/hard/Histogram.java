@@ -1,6 +1,5 @@
 package com.ssynhtn.hard;
 
-import com.sun.tools.javac.code.Attribute;
 
 public class Histogram {
     public int largestRectangleArea(int[] heights) {
