@@ -8,6 +8,8 @@ public class NWays {
         int n = words[0].length();
         int k = target.length();
 
+        if (k > n) return 0;
+
         int[][] f = new int[n][26];
         for (int i = 0; i < n; i++) {
             for (String s : words) {
@@ -30,12 +32,8 @@ public class NWays {
 //        for (int i = k-1; i >= 0; i--) {
 //            int c = target.charAt(i) - 'a';
 //            int limit = n - (k-i);
-//            for (int j = 0; j <= limit; j++) {
-//                int index = j; // index <= n-(k-i)
-//                while (index <= limit) {
-//                    dp[i][j] = (dp[i][j] + f[index][c] * dp[i+1][index + 1]) % MOD;
-//                    index++;
-//                }
+//            for (int j = limit; j >= 0; j--) {
+//                dp[i][j] = (dp[i][j] + f[j][c] * dp[i+1][j + 1] + dp[i][j+1]) % MOD;
 //            }
 //        }
 
@@ -45,21 +43,19 @@ public class NWays {
     private long compute(int[][] f, long[][] dp, int i, int j, String target, int n, int k) {
         if (dp[i][j] != -1) return dp[i][j];
         int c = target.charAt(i) - 'a';
-        int limit = n - (k-i);
-        int index = j; // index <= n-(k-i)
         long s = 0;
-        while (index <= limit) {
-            if (f[index][c] > 0) {
-                s = (s + f[index][c] * compute(f, dp, i+1, index + 1, target, n, k)) % MOD;
-            }
-            index++;
+        if (f[j][c] > 0) {
+            s = f[j][c] * compute(f, dp, i+1, j + 1, target, n, k);
         }
-        dp[i][j] = s;
-        return s;
+        if (n - j - 1 >= k - i) {
+            s += compute(f, dp, i, j + 1, target, n, k);
+        }
+        dp[i][j] = s % MOD;
+        return dp[i][j];
     }
 
     public static void main(String[] args) {
-        System.out.println(new NWays().numWays(new String[]{"abab","baba","abba","baab"}, "abba"));
+        System.out.println(new NWays().numWays(new String[]{"acca","bbbb","caca"}, "aba"));
     }
 //    每个word长度为n, target 长度为k
 //
