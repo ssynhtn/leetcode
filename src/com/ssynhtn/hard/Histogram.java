@@ -2,6 +2,26 @@ package com.ssynhtn.hard;
 
 
 public class Histogram {
+    public int maximalRectangle(char[][] matrix) {
+        if (matrix.length == 0 || matrix[0].length == 0) return 0;
+
+        int[] hist = new int[matrix[0].length];
+        int max = 0;
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                if (matrix[i][j] == '0') {
+                    hist[j] = 0;
+                } else {
+                    hist[j]++;
+                }
+            }
+
+            max = Math.max(max, largestRectangleArea(hist));
+        }
+
+        return max;
+    }
+
     public int largestRectangleArea(int[] heights) {
         return largestRectangleArea(heights, 0, heights.length);
     }
