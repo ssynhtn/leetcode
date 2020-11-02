@@ -1,12 +1,8 @@
 package com.ssynhtn.hard;
 
 import com.ssynhtn.common.TreeNode;
-import com.ssynhtn.medium.NumMatrix;
-import com.sun.xml.internal.xsom.XSTerm;
 
-import javax.print.DocFlavor;
 import java.util.ArrayDeque;
-import java.util.Arrays;
 
 public class NumOfWaysBinarySearchTree {
 
