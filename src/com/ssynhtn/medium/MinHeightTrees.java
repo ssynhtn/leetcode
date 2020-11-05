@@ -3,6 +3,49 @@ package com.ssynhtn.medium;
 import java.util.*;
 
 public class MinHeightTrees {
+    public List<Integer> findMinHeightTreesLeaf(int n, int[][] edges) {
+        if (n <= 2) {
+            List<Integer> res = new ArrayList<>();
+            for (int i = 0; i < n; i++) {
+                res.add(i);
+            }
+            return res;
+        }
+        Set<Integer>[] neibs = new Set[n];
+        for (int i = 0; i < n; i++) {
+            neibs[i] = new HashSet<>();
+
+        }
+        for (int[] e : edges){
+            int a = e[0];
+            int b = e[1];
+            neibs[a].add(b);
+            neibs[b].add(a);
+        }
+
+        ArrayDeque<Integer> leafs = new ArrayDeque<>();
+        for (int i = 0; i < n; i++) {
+            if (neibs[i].size() == 1) {
+                leafs.addLast(i);
+            }
+        }
+
+        int rem = n;
+        while (rem > 2) {
+            int size = leafs.size();
+            for (int i = 0; i < size; i++) {
+                int a = leafs.removeFirst();
+                int b = neibs[a].iterator().next();
+                neibs[b].remove(a);
+                if (neibs[b].size() == 1) {
+                    leafs.addLast(b);
+                }
+                rem--;
+            }
+        }
+
+        return new ArrayList<>(leafs);
+    }
     public List<Integer> findMinHeightTrees(int n, int[][] edges) {
         if (n == 1) return Collections.singletonList(0);
         if (n == 2) return Arrays.asList(0, 1);

@@ -1,13 +1,107 @@
 package com.ssynhtn.hard;
 
-import java.awt.image.AreaAveragingScaleFilter;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
 import java.util.List;
-import java.util.Set;
 
 
 public class CriticleEdge {
+    public List<List<Integer>> criticalConnections2(int n, List<List<Integer>> connections) {
+//        make graph, nodes -> nbs
+//
+//        make two sets of edges: one circle, one critical
+//        for each edge(a, b)
+//        search from a to b, keep the path
+//        if found then add all to circle
+//  else add to critical, remove a, b from each other
+        Set<Integer>[] nbs = new Set[n];
+        for (int i = 0; i < n; i++) {
+            nbs[i] = new HashSet<>();
+        }
+        for (List<Integer> edge : connections) {
+            int a = edge.get(0);
+            int b = edge.get(1);
+            nbs[a].add(b);
+            nbs[b].add(a);
+        }
+
+        Set<Integer>[] circles = new HashSet[n];
+        for (int i = 0; i < n; i++) {
+            circles[i] = new HashSet<>();
+        }
+        List<List<Integer>> criticals = new ArrayList<>();
+
+        for (List<Integer> edge : connections) {
+            int a = edge.get(0);
+            int b = edge.get(1);
+            if (circles[a].contains(b)) continue;
+
+            // temp remove a, b from each other
+            nbs[a].remove(b);
+            nbs[b].remove(a);
+
+            List<Integer> path = search(nbs, a, b, circles);
+            if(path != null) {
+                for (int i = 0; i < path.size() - 1; i++) {
+                    int x = path.get(i);
+                    int y = path.get(i + 1);
+                    circles[x].add(y);
+                    circles[y].add(x);
+                }
+                nbs[a].add(b);
+                nbs[b].add(a);
+            } else {
+                criticals.add(edge);
+            }
+        }
+
+
+        return criticals;
+    }
+
+    private List<Integer> search(Set<Integer>[] nbs, int a, int b, Set<Integer>[] circles) {
+        Set<Integer> visited = new HashSet<>();
+        List<Integer> prefix = new ArrayList<>();
+        visited.add(a);
+        prefix.add(a);
+        if (search(nbs, prefix, a, b, visited, circles)) {
+            return prefix;
+        }
+        return null;
+    }
+
+    // prefix.last == a
+    private boolean search(Set<Integer>[] nbs, List<Integer> prefix, int a, int b, Set<Integer> visited, Set<Integer>[] circles) {
+        if (a == b) return true;
+        Set<Integer> nexts = nbs[a];
+
+        for (int next : nexts) {
+            if (visited.contains(next)) {
+                // in prefix we have ... next -> .... a
+                if (prefix.size() >= 2 && prefix.get(prefix.size() - 2) != next) {
+                    circles[a].add(next);
+                    circles[next].add(a);
+                    for (int i = prefix.size() - 1; i >= 0; i--) {
+                        int u = prefix.get(i);
+                        int v = prefix.get(i - 1);
+                        circles[u].add(v);
+                        circles[v].add(u);
+                        if (v == next) break;
+                    }
+                }
+                continue;
+            }
+            visited.add(next);
+            prefix.add(next);
+            if (search(nbs, prefix, next, b, visited, circles)) {
+                return true;
+            }
+            prefix.remove(prefix.size() - 1);
+        }
+
+        return false;
+    }
+
+
     public List<List<Integer>> criticalConnections(int n, List<List<Integer>> connections) {
         boolean bad = true;
         if (bad) {
@@ -100,6 +194,18 @@ public class CriticleEdge {
     }
 
     public static void main(String[] args) {
+//        n = 4, connections = [[0,1],[1,2],[2,0],[1,3]]
+        List<List<Integer>> res = new CriticleEdge().criticalConnections2(4, Arrays.asList(
+                Arrays.asList(0, 1),
+                Arrays.asList(0, 2),
+                Arrays.asList(0, 3),
+                Arrays.asList(1, 2),
+                Arrays.asList(1, 3),
+                Arrays.asList(2, 3)
+        ));
 
+        for (List<Integer> edge : res) {
+            System.out.println(new ArrayList<>(edge));
+        }
     }
 }
