@@ -59,10 +59,9 @@ public class StreamChecker {
 
     private boolean checkWord(Node root, List<Character> chars) {
         for (Character ch : chars) {
-            if (root.children == null || root.children[ch - 'a'] == null) {
+            if ((root = root.children[ch - 'a']) == null) {
                 return false;
             }
-            root = root.children[ch - 'a'];
             if (root.isWord) return true;
         }
         return false;
