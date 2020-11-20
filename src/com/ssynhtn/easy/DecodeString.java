@@ -3,6 +3,65 @@ package com.ssynhtn.easy;
 import java.util.ArrayDeque;
 
 public class DecodeString {
+    public String decodeString2(String s) {
+        char[] chs = s.toCharArray();
+        int n = chs.length;
+        StringBuilder sb = new StringBuilder();
+        decodeRec(sb, chs, 0, n);
+
+        return sb.toString();
+    }
+
+
+//    recurse: // parse for the longest valid from i, append to buffer
+//    int n = buffer.length
+//    while (peek != ']')
+//    char: append, i++
+//    n:
+//    skip '['
+//    recurse
+//    repeat result n times
+//    skip ']'
+//
+//    recurse
+    private int decodeRec(StringBuilder sb, char[] chs, int i, int n) {
+        if (i >= n) return i;
+
+        char ch;
+        while (i < n && (ch = chs[i]) != ']') {
+            if (Character.isAlphabetic(ch)) {
+                sb.append(ch);
+                i++;
+            } else {
+                if (Character.isDigit(ch)) {
+                    int count = ch - '0';
+                    i++;
+                    while (i < n && Character.isDigit(chs[i])) {
+                        count = count * 10 + chs[i] - '0';
+                        i++;
+                    }
+
+                    i++;
+                    int len = sb.length();
+                    int j = decodeRec(sb, chs, i, n);
+                    int len2 = sb.length();
+                    count--;
+                    CharSequence part = sb.subSequence(len, len2);
+                    while (count > 0) {
+                        sb.append(part);
+                        count--;
+                    }
+                    i = j + 1;  // skip ]
+
+                } else {
+                    throw new RuntimeException("not alpha num");
+                }
+            }
+        }
+
+        return i;
+    }
+
     // 3[a2[c]] => accaccacc
     public String decodeString(String s) {
         if (s == null) return null;
@@ -79,5 +138,6 @@ public class DecodeString {
 
     public static void main(String[] args) {
         System.out.println(new DecodeString().decodeString("3[a2[c]d]"));
+        System.out.println(new DecodeString().decodeString2("3[a2[c]d]"));
     }
 }
