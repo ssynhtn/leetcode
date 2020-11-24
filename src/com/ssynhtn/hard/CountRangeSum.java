@@ -1,10 +1,8 @@
 package com.ssynhtn.hard;
 
-import com.ssynhtn.medium.CourseDependency;
-
-import java.util.ArrayDeque;
 import java.util.Arrays;
 
+// nlognlogn
 class CountRangeSum {
     public int countRangeSum(int[] nums, int lower, int upper) {
         int n = nums.length;
@@ -39,35 +37,11 @@ class CountRangeSum {
 
             if (min > buffer[right]) continue;
             if (max < buffer[mid + 1]) continue;
-            int minIndex = Arrays.binarySearch(buffer, mid + 1, right + 1, min);
-            int maxIndex = Arrays.binarySearch(buffer, mid + 1, right + 1, max);
+            int minIndex = bSearch(buffer, min, mid + 1, right);
+            int maxIndex = bSearchMax(buffer, max, mid + 1, right);
 
-            if (minIndex < 0) {
-                minIndex = -1 - minIndex;
-            } else {
-                while (minIndex > mid + 1 && buffer[minIndex - 1] == min) {
-                    minIndex--;
-                }
-            }
-
-            if (maxIndex < 0) {
-                maxIndex = -1 - maxIndex;
-            } else {
-                System.out.println("maxIndex " + maxIndex);
-                while (maxIndex < right && buffer[maxIndex + 1] == max) {
-                    maxIndex++;
-                }
-                maxIndex++;
-            }
-
-            res += maxIndex - minIndex;
-            if (maxIndex > minIndex) {
-                System.out.println(buffer[i] + " minIndex " + minIndex + ", maxIndex " + maxIndex);
-                for (int j = mid + 1; j <= right; j++) {
-                    System.out.print(buffer[j] + ",");
-                }
-                System.out.println();
-                System.out.println(left + " to " + mid + " - " + (mid + 1) + " to " + right + " has " + (maxIndex - minIndex) + " sums");
+            if (maxIndex >= minIndex) {
+                res += maxIndex - minIndex + 1;
             }
         }
 
@@ -75,18 +49,32 @@ class CountRangeSum {
     }
 
     // find >= min 的最小index
-//    int bSearch(long[] buffer, int min, int left, int right) {
-//        while (right - left >= 2) {
-//            int mid = left + (right - left) / 2;
-//            if (buffer[mid] >= min) {
-//                right = mid;
-//            } else {
-//                left = mid + 1;
-//            }
-//        }
-//
-//        return buffer[left] >= min ? left : right;
-//    }
+    int bSearch(long[] buffer, long min, int left, int right) {
+        while (right - left >= 2) {
+            int mid = left + (right - left) / 2;
+            if (buffer[mid] >= min) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+
+        return buffer[left] >= min ? left : right;
+    }
+
+    // find <= max 的最大index
+    int bSearchMax(long[] buffer, long max, int left, int right) {
+        while (right - left >= 2) {
+            int mid = left + (right - left) / 2;
+            if (buffer[mid] <= max) {
+                left = mid;
+            } else {
+                right = mid - 1;
+            }
+        }
+
+        return buffer[right] <= max ? right : left;
+    }
 
     public static void main(String[] args) {
         System.out.println(new CountRangeSum().countRangeSum(new int[]{-3,1,2,-2,2,-1}, -3, -1));
