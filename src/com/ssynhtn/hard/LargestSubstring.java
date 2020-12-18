@@ -13,11 +13,15 @@ class LargestSubstring {
 
         int i = n-1;
 
-        // [i, ~) current largest
+        // [i, n) current largest
         for (int j = n - 2; j >= 0; j--) {
             if (chs[j] < chs[i]) continue;
+            if (chs[j] > chs[i]) {
+                i = j;
+                continue;
+            }
 
-            // jth >= ith
+            // jth = ith
             int l = j;
             int r = i;
             while (l < i && r < n && chs[l] == chs[r]) {
@@ -25,13 +29,15 @@ class LargestSubstring {
                 r++;
             }
 
+            // if r == n, then [j, i) > [i, n) => [j, n) > [i, n)
+            // if l == i, then [j, i) > [i, 2i-j), with [i, n) current largest, so > [2i-j, n) we have [j, n) > [i, n)
+            // if l < i && r < n, then we found chs[l] != chs[r], if lth > rth, then [j,n) > [i,n)
             if (r == n || l == i || chs[l] > chs[r]) {
                 i = j;
             }
         }
 
         return new String(chs, i, n - i);
-
     }
     public String lastSubstringZ(String s) {
         char[] chs = s.toCharArray();
@@ -82,8 +88,16 @@ class LargestSubstring {
     }
 
     public static void main(String[] args) {
-        char[] chs = new char[10];
-        Arrays.fill(chs, 'a');
-        System.out.println(new LargestSubstring().lastSubstring(new String(chs)));
+        int n = 100000;
+        char[] chs = new char[n];
+        Arrays.fill(chs, 'z');
+        for (int i = n/3; i < n/3 * 2; i+=2) {
+            chs[i] = 'a';
+        }
+        long start = System.currentTimeMillis();
+        String res = new LargestSubstring().lastSubstring(new String(chs));
+        long used = System.currentTimeMillis() - start;
+        System.out.println("used " + used);
+        System.out.println(res);
     }
 }
